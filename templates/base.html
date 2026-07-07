@@ -1,0 +1,40 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{Home}}</title>
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <h2 class="logo"><a href="#">{{name}}</a></h2>
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="/attendance/view">View Attendance</a></li>
+          {% if user.is_staff %}          
+          <li><a href="/qrcode">QR Code</a></li>
+          <li><a href="/attendance/edit">Attendance edit</a></li>
+          {% endif %}
+          <li><a href="/logout">Sign Out</a></li>
+        </ul>
+
+      </nav>
+    </header>
+    <section class="hero-section">
+      <div class="hero">
+
+
+      <div class="img">
+        <img src="https://www.codingnepalweb.com/demos/create-responsive-website-html-css/hero-bg.png" alt="hero image" />
+      </div>
+    </section>
+  </body>
+</html>

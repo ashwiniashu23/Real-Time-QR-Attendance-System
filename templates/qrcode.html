@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Attendance</title>
+  <link rel="stylesheet" href="{% static 'css/qr.css' %}">
+</head>
+<body>
+  <div class="qr-wrapper">
+    <div class="qr-card">
+      <h2>Scan to Mark Attendance</h2>
+      <div class="qr-box">
+        <img src="{% static qr_url %}" alt="QR Code for Attendance" />
+      </div>
+      <p>Token: {{ token }}</p>
+      <p class="info">Make sure your camera is working properly before scanning. </p>
+    </div>
+  </div>
+</body>
+</html>
+
+

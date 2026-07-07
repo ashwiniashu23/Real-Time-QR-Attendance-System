@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Geolocation Attendance Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+  <script>
+    async function runPythonFunction() 
+    {
+      if (navigator.geolocation) 
+      {
+         navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+            console.log(userLat,userLon)
+
+
+            var csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value; // If js written outside then it won't take csrf automatically
+
+            const response = await fetch("/location", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": csrf_token // Include CSRF token if needed
+              },
+              body: `lat=${userLat}&long=${userLon}`
+
+            })
+            .then(response => response.text())
+            .then(html => {
+              document.body.innerHTML = html;  // replaces the whole page with the response
+            });;
+            redirect();
+          
+          },
+            
+          (error) => {
+                let message = "Unknown error occurred.";
+                switch (error.code) {
+                  case error.PERMISSION_DENIED:
+                    message = "User denied the request for Geolocation.";
+                    break;
+                  case error.POSITION_UNAVAILABLE:
+                    message = "Location information is unavailable.";
+                    break;
+                  case error.TIMEOUT:
+                    message = "The request to get user location timed out.";
+                    break;
+                }
+                document.getElementById("status").textContent = "⚠️ Error: " + message;
+                console.error("Geolocation error:", error);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+              }
+            );
+          } else {
+            document.getElementById("status").textContent = "Geolocation not supported by your browser.";
+          }
+        }
+        
+        window.onload = function() {
+    // Your code here
+            runPythonFunction();
+        };
+
+        function redirect()
+        {
+          setTimeout(function () {
+            window.location.href = "/dashboard"; 
+            }, 3000); // 5000 milliseconds = 5 seconds
+        }
+  </script>
+</head>
+
+<body>
+
+  <h2>QR Attendance - Validating Location</h2>
+  <p id="status"></p>
+  <form action="" method="POST">
+    {% csrf_token %}
+  </form>
+
+
+</body>
+
+</html>

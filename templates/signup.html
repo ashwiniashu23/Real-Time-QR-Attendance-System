@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static "css/signup.css" %}">
+    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3.0.0/dist/fp.min.js"></script>
+    <script src="{% static "JS/signup.js" %}"></script>
+    <script src="{% static "JS/adblock-checker.min.js" %}"></script>
+
+
+</head>
+
+<body >
+    <div class="signup">
+        <form class="form" action="/signup" method="POST">
+            {% csrf_token %}
+            <p class="title">Register </p>
+            <p class="message">Signup now and get full access to our app. </p>
+            {{message}}
+            <label for="">
+                <input type="text" required name="username" onkeydown=goToNext(event,this) class="input" id="username" value="{{ form_data.username }}">
+                <span>Username</span> 
+            </label>
+
+            <div class="flex">
+                <label id='fname'>
+                    <input required="" name="fname" onkeydown=goToNext(event,this) placeholder="" type="text" class="input" id="fname" value="{{ form_data.fname }}">
+                    <span>Firstname</span>
+                </label>
+
+                <label>
+                    <input required="" name="lname" onkeydown=goToNext(event,this) placeholder="" type="text" class="input" value="{{ form_data.lname }}">
+                    <span>Lastname</span>
+                </label>
+            </div>
+
+            <label>
+                <button onclick="runPythonFunction()" class="otp" id='otp'>Get Otp</button>
+                <input required="" placeholder="" onkeydown=emailfun(event,this) name="email" type="email" class="input" id="email" value="{{ form_data.email }}">
+                <span>Email</span>
+            </label>
+            <label id="insert-otp">
+
+            </label>
+
+            <label>
+                <input required="" onkeydown=goToNext(event,this) placeholder="" name="uucms" type="text" class="input" id="uucms">
+                <span>UUCMS</span>
+            </label>
+
+
+            <label>
+                <input required="" onkeydown=goToNext(event,this) placeholder="" name="pass1" type="password" class="input" id="pass1">
+                <span>Password</span>
+            </label>
+            <label>
+                <input required="" onkeydown=submit placeholder="" name="pass2" type="password" class="input" id="pass2">
+                <span>Confirm password</span>
+            </label>
+            <div class = "hidden">
+                <input type="number" name="height">
+                <input type="number" name="width">
+                <input type="text" name="unique" id='info'>
+            </div>
+            <button class="submit">Submit</button>
+            <p class="signin">Already have an acount ? <a href="/signin">SignIn</a> </p>
+        </form>
+    </div>
+
+</body>
+
+</html>
